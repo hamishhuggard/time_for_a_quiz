@@ -171,10 +171,6 @@
                     <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg font-black text-base shadow-sm" id="player-level">1</span>
                 </div>
 
-                <div class="flex flex-col items-center">
-                    <span class="font-black text-gray-400 text-xs uppercase tracking-wider">Streak</span>
-                    <span class="text-orange-500 font-black text-xl"><span id="player-streak">0</span> 🔥</span>
-                </div>
                 <div class="flex flex-col items-end">
                     <span class="font-black text-gray-400 text-xs uppercase tracking-wider">Total Time</span>
                     <span class="text-gray-800 font-black text-xl timer-display" id="timer-text">10:00</span>
@@ -272,7 +268,6 @@
         let activeLevel = 1;
 
         let myScore = 0;
-        let myStreak = 0;
         let myHistory = {};
         
         // Timers
@@ -931,14 +926,12 @@
             if(correct) {
                 playCorrectSound();
                 myScore += 10;
-                myStreak += 1;
                 myHistory[qId].correct++;
                 myQueue.shift(); // Remove from front of queue permanently
                 feedback.innerHTML = `<span class="text-green-500">✅ Correct! +10 Coins</span>`;
             } else {
                 playIncorrectSound();
-                myStreak = 0;
-                
+
                 inputEl.classList.add('shake', 'border-red-500');
                 
                 // Spaced Repetition: Push question back 3 spots (or to end if short)
@@ -985,7 +978,6 @@
         
         function updateUI() {
             document.getElementById('player-coins').innerText = myScore;
-            document.getElementById('player-streak').innerText = myStreak;
         }
 
         // --- END GAME & ANALYSIS ---
