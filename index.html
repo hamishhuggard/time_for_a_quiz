@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizBlitz</title>
+    <title>It's Time for a Quiz</title>
    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,13 +45,21 @@
         <!--                 START SCREEN               -->
         <!-- ========================================== -->
         <div id="view-start" class="m-auto w-full max-w-md bg-white p-8 rounded-2xl shadow-xl text-center slide-up max-h-[90vh] overflow-y-auto">
-            <h1 class="text-5xl font-black text-blue-600 mb-2">QuizBlitz 🔥</h1>
+            <h1 class="text-5xl font-black text-blue-600 mb-2">It's Time for a Quiz 🔥</h1>
             <p class="text-gray-500 mb-6 font-bold">Speed Run Challenge</p>
            
             <div id="loading-indicator" class="text-xl font-bold text-gray-400 mb-4 pulse-text">
                 Fetching questions...
             </div>
-           
+
+            <!-- 0. Deck picker -->
+            <div id="deck-select-container" class="mb-4 text-left hidden">
+                <label class="block text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Choose a Deck</label>
+                <select id="deck-select" onchange="handleDeckChange()" class="w-full bg-gray-50 border-2 border-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition cursor-pointer appearance-none">
+                </select>
+                <button type="button" onclick="toggleCustomSheet()" id="custom-sheet-toggle" class="mt-2 text-xs font-bold text-blue-500 hover:text-blue-700 uppercase tracking-wide">Or use your own Google Sheet…</button>
+            </div>
+
             <!-- 2. Title -->
             <div id="title-input-container" class="mb-4 text-left hidden">
                 <label class="block text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Quiz Title</label>
@@ -110,7 +118,7 @@
             </div>
 
             <button id="btn-start" onclick="handleActionClick()" disabled class="w-full bg-gray-400 text-white font-black py-4 rounded-xl transition shadow-lg text-2xl uppercase tracking-wide cursor-not-allowed hidden mt-2">
-                Start QuizBlitz
+                Start Quiz
             </button>
         </div>
 
@@ -149,7 +157,7 @@
         <!-- ========================================== -->
         <div id="view-game" class="m-auto w-full max-w-md bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl text-center hidden slide-up flex-col border border-white/50">
             <!-- Header Title (Dynamic) -->
-            <h1 id="game-title-display" class="text-3xl font-black text-blue-600 mb-4 hidden">QuizBlitz</h1>
+            <h1 id="game-title-display" class="text-3xl font-black text-blue-600 mb-4 hidden">It's Time for a Quiz</h1>
 
             <!-- Header Stats -->
             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-3 shrink-0">
@@ -227,23 +235,32 @@
     <script>
         // --- CONFIGURATION ---
         const urlParams = new URLSearchParams(window.location.search);
-        
+
         const customCSVUrl = urlParams.get('csv');
         const customTime = urlParams.get('time');
         const customTitle = urlParams.get('title');
-        
+
         if (customTitle) {
             document.title = customTitle + " 🔥";
         }
-        
+
         const customLevelMode = urlParams.get('levelMode'); // 'all', 'progressive', 'specific'
         const customLevels = urlParams.get('levels'); // e.g., '1,2,3'
-        
+
         const isDangerMode = urlParams.get('danger') === 'true';
         const customDangerTime = urlParams.get('dangerTime');
 
-        const defaultCSVUrl = "https://docs.google.com/spreadsheets/d/1At0ziXHmpXRjloLptcgIHYyIUNZX2whsMm-or1AQtRQ/export?format=csv&gid=0&single=true";
-        const CSV_URL = customCSVUrl ? customCSVUrl : defaultCSVUrl;
+        // --- DECK MENU ---
+        // Local decks bundled with this app, listed in the picker in this order.
+        // Each deck is a plain CSV in decks/ using the same headers PapaParse
+        // expects from a Google Sheet: Question, Answers, Explanation, Level, ImageURL.
+        const DECKS = [
+            { name: "Electromagnetism: units, quantities & symbols", file: "decks/electromagnetism_units_quantities_symbols.csv" }
+        ];
+
+        const defaultCSVUrl = DECKS[0].file;
+        // customCSVUrl (from a shared ?csv= link) always wins; otherwise start on the first deck.
+        let CSV_URL = customCSVUrl ? customCSVUrl : defaultCSVUrl;
 
         // --- STATE ---
         let questionsDB = []; 
@@ -299,8 +316,53 @@
             setTimeout(() => playTone(100, 'sawtooth', 1.5, 0.3), 300);
         }
 
+        // --- DECK MENU HELPERS ---
+        function populateDeckSelect() {
+            const select = document.getElementById('deck-select');
+            select.innerHTML = '';
+            DECKS.forEach((deck) => {
+                const opt = document.createElement('option');
+                opt.value = deck.file;
+                opt.innerText = deck.name;
+                select.appendChild(opt);
+            });
+            select.value = CSV_URL;
+        }
+
+        function handleDeckChange() {
+            const select = document.getElementById('deck-select');
+            CSV_URL = select.value;
+            const deck = DECKS.find(d => d.file === CSV_URL);
+            if (deck && !customTitle) {
+                document.getElementById('quiz-title-input').value = deck.name;
+            }
+            loadQuestions();
+        }
+
+        function toggleCustomSheet() {
+            const container = document.getElementById('url-input-container');
+            const btn = document.getElementById('custom-sheet-toggle');
+            const showing = !container.classList.contains('hidden');
+            if (showing) {
+                container.classList.add('hidden');
+                btn.innerText = "Or use your own Google Sheet…";
+            } else {
+                container.classList.remove('hidden');
+                btn.innerText = "Use the deck picker instead";
+            }
+        }
+
         // --- INITIALIZATION & DATA FETCHING ---
-        window.onload = () => {
+        function loadQuestions() {
+            document.getElementById('loading-indicator').style.display = 'block';
+            document.getElementById('loading-indicator').classList.remove('text-red-500');
+            document.getElementById('loading-indicator').innerText = "Fetching questions...";
+
+            const btn = document.getElementById('btn-start');
+            btn.disabled = true;
+            btn.classList.add('bg-gray-400', 'cursor-not-allowed', 'hidden');
+            btn.classList.remove('bg-green-500', 'hover:bg-green-600', 'active:scale-95');
+
             Papa.parse(CSV_URL, {
                 download: true,
                 header: true,
@@ -317,26 +379,26 @@
                                 level: row.Level ? parseInt(row.Level, 10) || 1 : 1
                             };
                         });
-                        
+
                         // Discover all unique levels for progressive mode
                         availableLevels = [...new Set(questionsDB.map(q => q.level))].sort((a, b) => a - b);
-                        
+
                         // Initialize history tracking
+                        myHistory = {};
                         questionsDB.forEach(q => myHistory[q.id] = { attempts: 0, correct: 0 });
-                        
+
                         // Update UI to allow starting
                         document.getElementById('loading-indicator').style.display = 'none';
-                        
+
                         // Show config UI if params are missing
-                        if (!customCSVUrl) document.getElementById('url-input-container').classList.remove('hidden');
+                        if (!customCSVUrl) document.getElementById('deck-select-container').classList.remove('hidden');
                         if (!customTitle) document.getElementById('title-input-container').classList.remove('hidden');
                         if (!customTime) document.getElementById('time-select-container').classList.remove('hidden');
                         if (!customLevelMode) document.getElementById('level-settings-container').classList.remove('hidden');
                         if (urlParams.get('danger') === null) document.getElementById('danger-settings-container').classList.remove('hidden');
-                        
-                        const btn = document.getElementById('btn-start');
+
                         btn.disabled = false;
-                        btn.innerText = (customCSVUrl && customTime) ? "Start QuizBlitz" : "Set Up & Start";
+                        btn.innerText = (customCSVUrl && customTime) ? "Start Quiz" : "Set Up & Start";
                         btn.classList.remove('bg-gray-400', 'cursor-not-allowed', 'hidden');
                         btn.classList.add('bg-green-500', 'hover:bg-green-600', 'active:scale-95');
                     } else {
@@ -349,6 +411,17 @@
                     console.error("PapaParse Error:", err);
                 }
             });
+        }
+
+        window.onload = () => {
+            populateDeckSelect();
+            if (customTitle) {
+                document.getElementById('quiz-title-input').value = customTitle;
+            } else if (!customCSVUrl) {
+                const deck = DECKS.find(d => d.file === CSV_URL);
+                if (deck) document.getElementById('quiz-title-input').value = deck.name;
+            }
+            loadQuestions();
         };
 
         // --- UI INTERACTION (START SCREEN) ---
@@ -387,7 +460,7 @@
             // CSV URL
             if (!customCSVUrl) {
                 const urlInput = document.getElementById('sheet-url-input').value.trim();
-                let targetCsv = defaultCSVUrl;
+                let targetCsv = CSV_URL;
                 if (urlInput) {
                     const parsed = parseGoogleSheetUrl(urlInput);
                     if (parsed) { targetCsv = parsed; } 

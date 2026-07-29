@@ -1,0 +1,30 @@
+Question,Answers,Explanation,Level
+What is the symbol for time?,t,,1
+What is the unit for time?,second (s)|second|s,,1
+What is the symbol for energy?,E,,1
+What is the unit for energy?,joule (J)|joule|J,,1
+What is the symbol for power?,P,,1
+What is the unit for power?,watt (W)|watt|W,,1
+What is the symbol for voltage?,V,,1
+What is the unit for voltage?,volt (V)|volt|V,,1
+What is the symbol for charge?,q|Q|q (or Q),,1
+What is the unit for charge?,coulomb (C)|coulomb|C,,1
+What is the symbol for current?,I,,1
+What is the unit for current?,ampere (A)|ampere|amp|A,,1
+What is the symbol for resistance?,R,,1
+What is the unit for resistance?,ohm (Ω)|ohm|Ω,,1
+What is the symbol for magnetic field strength?,B,,1
+What is the unit for magnetic field strength?,tesla (T)|tesla|T,,1
+What is the symbol for electric field strength?,E,,2
+What is the unit for electric field strength?,volt per metre (V/m)|volt per metre|V/m,,2
+"What is the symbol for the unit ""ohm""?",Ω|omega,We don't write a plain O for ohms since it looks too much like zero — the Greek letter omega stands in instead.,2
+The volt is named after which scientist?,Alessandro Volta|Volta,Alessandro Volta invented the first electrical battery.,2
+The ampere is named after which scientist?,André-Marie Ampère|Ampere|Ampère|Andre-Marie Ampere,André-Marie Ampère founded the study of electrodynamics.,2
+Which quantity is measured in ohms?,resistance,,1
+The symbol I for current comes from which word?,intensité|the French word intensité|intensite,I comes from the French word intensité meaning current intensity.,2
+Which two quantities share the exact same symbol E?,energy and electric field strength,"Same letter, two completely different quantities and units — stay alert for this one.",3
+Which symbol represents a bulk/macroscopic charge made of billions of particles?,Q,Uppercase Q is the charge on an object — made of billions of individual particle charges.,2
+Which symbol represents the charge on a single particle like one electron?,q,Lowercase q is the charge on one fundamental particle such as a single electron or proton.,2
+True or false: the coulomb (C) is the SI unit of electric current.,false,The coulomb measures charge — current is measured in amperes (A).,2
+True or false: V stands for both a quantity (voltage) and a unit (volt).,true,"Context tells you which — ""V = 6 V"" reads: the voltage is six volts.",3
+True or false: the volt is named after a person.,true,"Alessandro Volta — so are the ampere, ohm, coulomb, watt and tesla.",1
