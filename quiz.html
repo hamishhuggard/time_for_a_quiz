@@ -24,6 +24,8 @@
         .pulse-text { animation: pulseText 1.5s infinite; }
         @keyframes pulseText { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
 
+        .tip-open .danger-tooltip { opacity: 1 !important; visibility: visible !important; }
+
         /* Danger Mode Animations */
         .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
@@ -92,22 +94,20 @@
     <div id="danger-vignette" class="fixed inset-0 pointer-events-none z-[100] hidden transition-all duration-75" style="box-shadow: inset 0 0 0px rgba(255,0,0,0);"></div>
 
     <div class="flex-1 flex p-4 relative z-10">
-       
+
         <!-- ========================================== -->
         <!--                 START SCREEN               -->
         <!-- ========================================== -->
         <div id="view-start" class="m-auto w-full max-w-md slide-up">
+          <a id="start-home-link" href="index.html" class="inline-flex items-center gap-1.5 mb-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 font-black py-2 px-4 rounded-full shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 uppercase tracking-wide text-sm transition hover:scale-105 active:scale-95">🏠 Home</a>
           <div class="start-deck-wrap">
             <div class="start-stack-layer l2"></div>
             <div class="start-stack-layer l1"></div>
             <div class="start-card-face bg-white dark:bg-gray-800">
-                <div id="start-corner-tl" class="start-card-corner tl">🔥</div>
-                <div id="start-corner-br" class="start-card-corner br">🔥</div>
+                <div id="start-corner-tl" class="start-card-corner tl">⚡🧪🧂</div>
+                <div id="start-corner-br" class="start-card-corner br">⚡🧪🧂</div>
                 <div class="text-center p-8 max-h-[90vh] overflow-y-auto">
-                    <div class="text-left mb-2">
-                        <a href="index.html" class="text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 uppercase tracking-wide transition">🏠 Home</a>
-                    </div>
-                    <h1 id="start-title" class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-2">It's Time for a Quiz 🔥</h1>
+                    <h1 id="start-title" class="font-black text-blue-600 dark:text-blue-400 mb-2 break-words" style="font-size: clamp(1.5rem, 2rem + 1vw, 3rem); line-height: 1.15;">It's Time for a Quiz ⚡🧪🧂</h1>
                     <p class="text-gray-500 dark:text-gray-400 mb-6 font-bold">Speed Run Challenge</p>
 
                     <div id="loading-indicator" class="text-xl font-bold text-gray-400 dark:text-gray-500 mb-4 pulse-text">
@@ -152,6 +152,15 @@
                             <input type="checkbox" id="danger-mode-toggle" class="form-checkbox h-6 w-6 text-red-600 rounded">
                             <span class="text-sm font-black text-red-600 dark:text-red-400 uppercase tracking-wide flex items-center gap-1">
                                 ⚠️ Danger Mode
+                                <span class="relative inline-block group/tip">
+                                    <span
+                                        onclick="event.preventDefault(); event.stopPropagation(); this.parentElement.classList.toggle('tip-open');"
+                                        class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-red-200 dark:bg-red-800 text-red-700 dark:text-red-200 text-[10px] font-black normal-case cursor-help"
+                                    >?</span>
+                                    <span class="danger-tooltip absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-52 bg-gray-900 text-white text-xs font-bold normal-case leading-snug rounded-lg py-2 px-3 shadow-xl opacity-0 invisible group-hover/tip:opacity-100 group-hover/tip:visible transition pointer-events-none z-30">
+                                        Each question has a short countdown — answer before it runs out or you lose the round.
+                                    </span>
+                                </span>
                             </span>
                         </label>
                     </div>
@@ -287,7 +296,10 @@
 
         if (displayTitle) {
             document.title = displayTitle;
-            document.getElementById('start-title').innerText = displayTitle;
+            const titleEl = document.getElementById('start-title');
+            titleEl.innerText = displayTitle;
+            if (displayTitle.length > 30) titleEl.style.fontSize = 'clamp(1.25rem, 1.4rem + 0.6vw, 2rem)';
+            else if (displayTitle.length > 18) titleEl.style.fontSize = 'clamp(1.5rem, 1.6rem + 0.8vw, 2.5rem)';
         }
         if (customIcon) {
             document.getElementById('start-corner-tl').innerText = customIcon;
@@ -600,6 +612,7 @@
             
             document.getElementById('view-start').style.display = 'none';
             document.getElementById('view-game').style.display = 'flex';
+            document.getElementById('start-home-link').style.display = 'none';
             
             // Setup Title
             if (displayTitle) {
