@@ -119,15 +119,13 @@
         pointer-events: none;
     }
 
+    /* l2 is the "table" card — it never moves, the rest pop up off it */
     .deck-link:hover .card-face {
-        transform: translate(-5px, -5px);
-        box-shadow: 12px 12px 0 var(--shadow-color);
+        transform: translate(5px, -18px) rotate(-1.5deg);
     }
-    .deck-link:hover .stack-layer.l1 { transform: translate(9px, 9px) rotate(-4deg); }
-    .deck-link:hover .stack-layer.l2 { transform: translate(16px, 16px) rotate(6deg); }
+    .deck-link:hover .stack-layer.l1 { transform: translate(5px, -7px) rotate(-2deg); }
     .deck-link:active .card-face {
-        transform: translate(2px, 2px);
-        box-shadow: 3px 3px 0 var(--shadow-color);
+        transform: translate(5px, -10px) rotate(-1deg);
     }
 
     .card-corner {
@@ -164,6 +162,15 @@
         line-height: 1.35;
         margin-top: auto;
     }
+    .card-best {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1.5px dashed var(--ink-soft);
+        text-align: center;
+        font-size: 12.5px;
+        font-weight: 900;
+        color: var(--accent);
+    }
 
     @media (max-width: 600px) {
         .hub-title { font-size: 34px; }
@@ -184,7 +191,7 @@
         <h2 class="subject-title">Physics</h2>
         <div class="deck-grid">
 
-            <a class="deck-link" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_units_quantities_symbols.csv&title=Electromagnetism%3A%20units%2C%20quantities%20%26%20symbols&dangerTime=7">
+            <a class="deck-link" data-csv="decks/physics/electromagnetism/electromagnetism_units_quantities_symbols.csv" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_units_quantities_symbols.csv&title=Electromagnetism%3A%20units%2C%20quantities%20%26%20symbols&dangerTime=7&icon=%E2%9A%A1">
                 <div class="deck-stack">
                     <div class="stack-layer l2"></div>
                     <div class="stack-layer l1"></div>
@@ -198,7 +205,7 @@
                 </div>
             </a>
 
-            <a class="deck-link" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_equations_and_concepts.csv&title=Electromagnetism%3A%20equations%20%26%20concepts&dangerTime=7">
+            <a class="deck-link" data-csv="decks/physics/electromagnetism/electromagnetism_equations_and_concepts.csv" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_equations_and_concepts.csv&title=Electromagnetism%3A%20equations%20%26%20concepts&dangerTime=7&icon=%F0%9F%A7%B2">
                 <div class="deck-stack">
                     <div class="stack-layer l2"></div>
                     <div class="stack-layer l1"></div>
@@ -220,7 +227,7 @@
         <h2 class="subject-title">Chemistry</h2>
         <div class="deck-grid">
 
-            <a class="deck-link" href="quiz.html?csv=decks%2Fchemistry%2Facids_bases%2Facids_bases.csv&title=Acids%20%26%20Bases&dangerTime=5">
+            <a class="deck-link" data-csv="decks/chemistry/acids_bases/acids_bases.csv" href="quiz.html?csv=decks%2Fchemistry%2Facids_bases%2Facids_bases.csv&title=Acids%20%26%20Bases&dangerTime=5&icon=%F0%9F%A7%AA">
                 <div class="deck-stack">
                     <div class="stack-layer l2"></div>
                     <div class="stack-layer l1"></div>
@@ -238,6 +245,20 @@
     </div>
 
 </div>
+
+<script>
+    const bestScores = JSON.parse(localStorage.getItem('ttq_best_scores') || '{}');
+    document.querySelectorAll('.deck-link').forEach((link) => {
+        const csv = link.dataset.csv;
+        const best = bestScores[csv];
+        if (best !== undefined) {
+            const badge = document.createElement('div');
+            badge.className = 'card-best';
+            badge.textContent = `🏆 Best: ${best} ⭐`;
+            link.querySelector('.card-face').appendChild(badge);
+        }
+    });
+</script>
 
 </body>
 </html>

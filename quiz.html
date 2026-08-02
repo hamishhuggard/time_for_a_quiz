@@ -45,7 +45,7 @@
         <!--                 START SCREEN               -->
         <!-- ========================================== -->
         <div id="view-start" class="m-auto w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl text-center slide-up max-h-[90vh] overflow-y-auto">
-            <h1 class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-2">It's Time for a Quiz 🔥</h1>
+            <h1 id="start-title" class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-2">It's Time for a Quiz 🔥</h1>
             <p class="text-gray-500 dark:text-gray-400 mb-6 font-bold">Speed Run Challenge</p>
 
             <div id="loading-indicator" class="text-xl font-bold text-gray-400 dark:text-gray-500 mb-4 pulse-text">
@@ -95,7 +95,10 @@
             </div>
 
             <button id="btn-start" onclick="handleActionClick()" disabled class="w-full bg-gray-400 text-white font-black py-4 rounded-xl transition shadow-lg text-2xl uppercase tracking-wide cursor-not-allowed hidden mt-2">
-                Start Quiz
+                Start
+            </button>
+            <button id="btn-copy-link" onclick="copyQuizLink()" class="w-full mt-3 bg-transparent text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold py-2 text-sm uppercase tracking-wide transition hidden">
+                🔗 Copy Link to This Quiz
             </button>
         </div>
 
@@ -136,11 +139,17 @@
             <!-- Header Title (Dynamic) -->
             <h1 id="game-title-display" class="text-3xl font-black text-blue-600 dark:text-blue-400 mb-4 hidden">It's Time for a Quiz</h1>
 
+            <!-- Quick Actions -->
+            <div class="flex justify-between items-center mb-2 shrink-0">
+                <a href="index.html" class="text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 uppercase tracking-wide transition">🏠 Home</a>
+                <button onclick="endGame()" class="text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 uppercase tracking-wide transition">⏹ End Early</button>
+            </div>
+
             <!-- Header Stats -->
             <div class="flex justify-between items-center mb-4 border-b border-gray-200 dark:border-gray-700 pb-3 shrink-0">
                 <div class="flex flex-col text-left">
                     <span class="font-black text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wider">Score</span>
-                    <span class="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full font-black text-base shadow-sm"><span id="player-coins">0</span> 🪙</span>
+                    <span class="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full font-black text-base shadow-sm"><span id="player-coins">0</span> ⭐</span>
                 </div>
 
                 <div class="flex flex-col items-end">
@@ -188,7 +197,7 @@
 
             <div id="score-container" class="bg-yellow-100 dark:bg-yellow-900 border-2 border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200 p-6 rounded-2xl inline-block w-full shadow-sm mb-8">
                 <span class="block text-sm uppercase tracking-widest font-black mb-1">Final Score</span>
-                <span class="font-black text-5xl"><span id="final-coins">0</span> 🪙</span>
+                <span class="font-black text-5xl"><span id="final-coins">0</span> ⭐</span>
             </div>
 
             <div id="end-game-message" class="text-left text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 p-6 rounded-xl border border-gray-200 dark:border-gray-600 shadow-inner">
@@ -196,6 +205,7 @@
             </div>
 
             <button onclick="location.reload()" class="w-full mt-8 bg-blue-600 text-white font-black py-4 rounded-xl hover:bg-blue-700 active:scale-95 transition shadow-lg text-xl uppercase tracking-wide">Play Again</button>
+            <a href="index.html" class="block w-full mt-3 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-bold py-2 text-sm uppercase tracking-wide transition">🏠 Back to Home</a>
         </div>
 
     </div>
@@ -207,9 +217,12 @@
         const customCSVUrl = urlParams.get('csv');
         const customTime = urlParams.get('time');
         const customTitle = urlParams.get('title');
+        const customIcon = urlParams.get('icon');
+        const displayTitle = customTitle ? (customIcon ? customTitle + ' ' + customIcon : customTitle) : null;
 
-        if (customTitle) {
-            document.title = customTitle + " 🔥";
+        if (displayTitle) {
+            document.title = displayTitle;
+            document.getElementById('start-title').innerText = displayTitle;
         }
 
         const isDangerMode = urlParams.get('danger') === 'true';
@@ -295,8 +308,16 @@
                         myHistory = {};
                         questionsDB.forEach(q => myHistory[q.id] = { attempts: 0, correct: 0 });
 
-                        // Update UI to allow starting
                         document.getElementById('loading-indicator').style.display = 'none';
+
+                        // If every setting was already supplied via the URL (e.g. a shared
+                        // link, or after the config-redirect below has already happened once),
+                        // skip straight into the quiz instead of making the user click Start twice.
+                        const allSettingsPresent = customCSVUrl && customTime && (urlParams.get('danger') !== null);
+                        if (allSettingsPresent) {
+                            startGame();
+                            return;
+                        }
 
                         // Show config UI if params are missing
                         if (!customTitle) document.getElementById('title-input-container').classList.remove('hidden');
@@ -304,9 +325,10 @@
                         if (urlParams.get('danger') === null) document.getElementById('danger-settings-container').classList.remove('hidden');
 
                         btn.disabled = false;
-                        btn.innerText = (customCSVUrl && customTime) ? "Start Quiz" : "Set Up & Start";
+                        btn.innerText = "Start";
                         btn.classList.remove('bg-gray-400', 'cursor-not-allowed', 'hidden');
                         btn.classList.add('bg-green-500', 'hover:bg-green-600', 'active:scale-95');
+                        document.getElementById('btn-copy-link').classList.remove('hidden');
                     } else {
                         document.getElementById('loading-indicator').innerText = "Error loading questions. Check URL.";
                         document.getElementById('loading-indicator').classList.add('text-red-500');
@@ -336,7 +358,7 @@
 
                 const btn = document.getElementById('btn-start');
                 btn.disabled = false;
-                btn.innerText = "Set Up & Start";
+                btn.innerText = "Start";
                 btn.classList.remove('bg-gray-400', 'cursor-not-allowed', 'hidden');
                 btn.classList.add('bg-green-500', 'hover:bg-green-600', 'active:scale-95');
             }
@@ -356,10 +378,10 @@
             return null;
         }
 
-        function handleActionClick() {
+        function computeParams() {
             let needsRedirect = false;
             const newParams = new URLSearchParams(window.location.search);
-            
+
             // CSV URL
             if (!customCSVUrl) {
                 const urlInput = document.getElementById('sheet-url-input').value.trim();
@@ -367,9 +389,9 @@
                 if (urlInput) {
                     const parsed = parseGoogleSheetUrl(urlInput);
                     if (parsed) { targetCsv = parsed; }
-                    else { alert("Invalid Google Sheets URL."); return; }
+                    else { return { error: "Invalid Google Sheets URL." }; }
                 }
-                if (!targetCsv) { alert("Please paste a Google Sheets URL to load questions from."); return; }
+                if (!targetCsv) { return { error: "Please paste a Google Sheets URL to load questions from." }; }
                 newParams.set('csv', targetCsv);
                 needsRedirect = true;
             }
@@ -396,12 +418,30 @@
                 }
                 needsRedirect = true;
             }
-            
-            if (needsRedirect) {
-                window.location.search = newParams.toString();
+
+            return { newParams, needsRedirect };
+        }
+
+        function handleActionClick() {
+            const result = computeParams();
+            if (result.error) { alert(result.error); return; }
+            if (result.needsRedirect) {
+                window.location.search = result.newParams.toString();
             } else {
                 startGame();
             }
+        }
+
+        function copyQuizLink() {
+            const result = computeParams();
+            if (result.error) { alert(result.error); return; }
+            const url = window.location.origin + window.location.pathname + '?' + result.newParams.toString();
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('btn-copy-link');
+                const original = btn.innerText;
+                btn.innerText = "✅ Link Copied!";
+                setTimeout(() => { btn.innerText = original; }, 1500);
+            });
         }
 
         function showHelp() { document.getElementById('help-modal').classList.remove('hidden'); }
@@ -493,9 +533,9 @@
             document.getElementById('view-game').style.display = 'flex';
             
             // Setup Title
-            if (customTitle) {
+            if (displayTitle) {
                 const titleEl = document.getElementById('game-title-display');
-                titleEl.innerText = customTitle + " 🔥";
+                titleEl.innerText = displayTitle;
                 titleEl.classList.remove('hidden');
             }
 
@@ -653,6 +693,7 @@
             document.getElementById('end-title').classList.add('text-red-700', 'dark:text-red-400');
             document.getElementById('end-subtitle').innerText = "You ran out of time on a question.";
             document.getElementById('final-coins').innerText = myScore;
+            saveBestScore();
 
             const msgEl = document.getElementById('end-game-message');
             const correctAns = currentQuestionObj.a[0];
@@ -819,6 +860,16 @@
         }
 
         // --- END GAME & ANALYSIS ---
+        function saveBestScore() {
+            if (!CSV_URL) return;
+            const key = 'ttq_best_scores';
+            const store = JSON.parse(localStorage.getItem(key) || '{}');
+            if (!store[CSV_URL] || myScore > store[CSV_URL]) {
+                store[CSV_URL] = myScore;
+                localStorage.setItem(key, JSON.stringify(store));
+            }
+        }
+
         function endGame() {
             stopDangerTimer();
             clearInterval(timerInterval);
@@ -826,6 +877,7 @@
             document.getElementById('view-end').style.display = 'block';
 
             document.getElementById('final-coins').innerText = myScore;
+            saveBestScore();
 
             playVictoryFanfare();
 
