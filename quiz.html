@@ -45,6 +45,9 @@
         <!--                 START SCREEN               -->
         <!-- ========================================== -->
         <div id="view-start" class="m-auto w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl text-center slide-up max-h-[90vh] overflow-y-auto">
+            <div class="text-left mb-2">
+                <a href="index.html" class="text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 uppercase tracking-wide transition">🏠 Home</a>
+            </div>
             <h1 id="start-title" class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-2">It's Time for a Quiz 🔥</h1>
             <p class="text-gray-500 dark:text-gray-400 mb-6 font-bold">Speed Run Challenge</p>
 
@@ -74,7 +77,7 @@
 
             <!-- 3. Time Limit -->
             <div id="time-select-container" class="mb-4 text-left hidden">
-                <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Main Time Limit</label>
+                <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Time Limit</label>
                 <select id="time-limit" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition cursor-pointer appearance-none">
                     <option value="1">1 Minute</option>
                     <option value="2">2 Minutes</option>
@@ -245,7 +248,7 @@
         let timeRemaining = 0;
         let timerInterval = null;
         
-        let dangerTimeTotal = parseInt(customDangerTime) || 5;
+        let dangerTimeTotal = parseInt(customDangerTime) || 8;
         let dangerTimeRemaining = dangerTimeTotal;
         let dangerInterval = null;
 
@@ -662,16 +665,9 @@
             bar.style.width = `${(dangerTimeRemaining / dangerTimeTotal) * 100}%`;
             
             // Vignette update (Exponential intensity as time runs out)
-            const spread = Math.pow(ratio, 2) * 200; 
+            const spread = Math.pow(ratio, 2) * 200;
             const alpha = Math.min(ratio * 0.9, 0.9);
             document.getElementById('danger-vignette').style.boxShadow = `inset 0 0 ${spread}px 10px rgba(255,0,0,${alpha})`;
-            
-            // Shake UI if time < 2s
-            if (dangerTimeRemaining <= 2.0 && dangerTimeRemaining > 1.8) {
-                document.getElementById('view-game').classList.add('shake');
-            } else if (dangerTimeRemaining < 1.8 && dangerTimeRemaining > 0) {
-                document.getElementById('view-game').classList.remove('shake');
-            }
         }
 
         function dieFromDanger() {
