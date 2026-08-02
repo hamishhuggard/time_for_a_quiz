@@ -77,11 +77,12 @@
     }
 
     /* ---- Skeuomorphic playing-card deck ---- */
-    .deck-link { display: block; text-decoration: none; color: inherit; }
+    .deck-link { display: block; text-decoration: none; color: inherit; height: 100%; }
 
     .deck-stack {
         position: relative;
         padding: 0 16px 16px 0;
+        height: 100%;
     }
 
     .stack-layer {
@@ -104,6 +105,7 @@
         box-shadow: 7px 7px 0 var(--shadow-color);
         padding: 22px 18px 20px;
         min-height: 230px;
+        height: 100%;
         display: flex;
         flex-direction: column;
         transition: transform 0.18s ease, box-shadow 0.18s ease;
@@ -191,7 +193,13 @@
         <h2 class="subject-title">Physics</h2>
         <div class="deck-grid">
 
-            <a class="deck-link" data-csv="decks/physics/electromagnetism/electromagnetism_units_quantities_symbols.csv" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_units_quantities_symbols.csv&title=Electromagnetism%3A%20units%2C%20quantities%20%26%20symbols&dangerTime=7&icon=%E2%9A%A1">
+            <!--
+              Default-length assumption: ~18s/question, capped at 5 min.
+              electromagnetism_units_quantities_symbols.csv has 29 items -> 29*18s = 522s ≈ 9 min,
+              capped down to 5 min (Hamish, 03/08/2026 — big decks don't get a proportionally
+              longer default, they just don't cover every item in one sitting).
+            -->
+            <a class="deck-link" data-csv="decks/physics/electromagnetism/electromagnetism_units_quantities_symbols.csv" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_units_quantities_symbols.csv&title=Electromagnetism%3A%20units%2C%20quantities%20%26%20symbols&dangerTime=7&time=5&icon=%E2%9A%A1">
                 <div class="deck-stack">
                     <div class="stack-layer l2"></div>
                     <div class="stack-layer l1"></div>
@@ -205,7 +213,12 @@
                 </div>
             </a>
 
-            <a class="deck-link" data-csv="decks/physics/electromagnetism/electromagnetism_equations_and_concepts.csv" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_equations_and_concepts.csv&title=Electromagnetism%3A%20equations%20%26%20concepts&dangerTime=7&icon=%F0%9F%A7%B2">
+            <!--
+              Same default-length assumption (~18s/question, capped at 5 min).
+              electromagnetism_equations_and_concepts.csv has 29 items -> 29*18s = 522s ≈ 9 min,
+              capped down to 5 min — see note on the units/quantities/symbols deck above.
+            -->
+            <a class="deck-link" data-csv="decks/physics/electromagnetism/electromagnetism_equations_and_concepts.csv" href="quiz.html?csv=decks%2Fphysics%2Felectromagnetism%2Felectromagnetism_equations_and_concepts.csv&title=Electromagnetism%3A%20equations%20%26%20concepts&dangerTime=7&time=5&icon=%F0%9F%A7%B2">
                 <div class="deck-stack">
                     <div class="stack-layer l2"></div>
                     <div class="stack-layer l1"></div>
@@ -227,7 +240,12 @@
         <h2 class="subject-title">Chemistry</h2>
         <div class="deck-grid">
 
-            <a class="deck-link" data-csv="decks/chemistry/acids_bases/acids_bases.csv" href="quiz.html?csv=decks%2Fchemistry%2Facids_bases%2Facids_bases.csv&title=Acids%20%26%20Bases&dangerTime=8&icon=%F0%9F%A7%AA">
+            <!--
+              Same default-length assumption (~18s/question, capped at 5 min).
+              acids_bases.csv has 50 items -> 50*18s = 900s = 15 min, capped down to 5 min —
+              see note on the electromagnetism decks above.
+            -->
+            <a class="deck-link" data-csv="decks/chemistry/acids_bases/acids_bases.csv" href="quiz.html?csv=decks%2Fchemistry%2Facids_bases%2Facids_bases.csv&title=Acids%20%26%20Bases&dangerTime=8&time=5&icon=%F0%9F%A7%AA">
                 <div class="deck-stack">
                     <div class="stack-layer l2"></div>
                     <div class="stack-layer l1"></div>
@@ -237,6 +255,48 @@
                         <div class="card-pip">🧪</div>
                         <div class="card-title">Acids &amp; Bases</div>
                         <div class="card-hook">pH, indicators, neutralisation, salts, and gas tests.</div>
+                    </div>
+                </div>
+            </a>
+
+            <!--
+              Default `time=` below is per-deck, not a fixed global number: it's picked
+              so an average sitting takes ~5 minutes, scaled to how many items are in
+              the deck. Assumption (no existing per-question timing data was found
+              anywhere in this codebase, only the per-question `dangerTime` countdown,
+              which is a fixed reaction-time limit, not an average solve time):
+              ~18 seconds/question (midpoint of a defensible 15-20s/question range for
+              short recall questions). default_minutes = round(itemCount * 18s / 60).
+              naming_salts.csv has 18 items -> 18*18s = 324s ≈ 5 min.
+            -->
+            <a class="deck-link" data-csv="decks/chemistry/naming_salts/naming_salts.csv" href="quiz.html?csv=decks%2Fchemistry%2Fnaming_salts%2Fnaming_salts.csv&title=Naming%20Salts&dangerTime=8&time=5&icon=%F0%9F%A7%82">
+                <div class="deck-stack">
+                    <div class="stack-layer l2"></div>
+                    <div class="stack-layer l1"></div>
+                    <div class="card-face">
+                        <div class="card-corner tl">🧂</div>
+                        <div class="card-corner br">🧂</div>
+                        <div class="card-pip">🧂</div>
+                        <div class="card-title">Naming Salts</div>
+                        <div class="card-hook">Acid + metal/base &rarr; name the salt (chloride, sulfate, nitrate).</div>
+                    </div>
+                </div>
+            </a>
+
+            <!--
+              Same default-length assumption as above (~18s/question, target ~5 min
+              average). common_formulae.csv has 18 items -> 18*18s = 324s ≈ 5 min.
+            -->
+            <a class="deck-link" data-csv="decks/chemistry/common_formulae/common_formulae.csv" href="quiz.html?csv=decks%2Fchemistry%2Fcommon_formulae%2Fcommon_formulae.csv&title=Common%20Formulae&dangerTime=8&time=5&icon=%F0%9F%94%A4">
+                <div class="deck-stack">
+                    <div class="stack-layer l2"></div>
+                    <div class="stack-layer l1"></div>
+                    <div class="card-face">
+                        <div class="card-corner tl">🔤</div>
+                        <div class="card-corner br">🔤</div>
+                        <div class="card-pip">🔤</div>
+                        <div class="card-title">Common Formulae</div>
+                        <div class="card-hook">Recall the chemical formula for common acids, bases &amp; compounds.</div>
                     </div>
                 </div>
             </a>
