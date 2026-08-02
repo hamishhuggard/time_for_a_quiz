@@ -23,7 +23,7 @@
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .pulse-text { animation: pulseText 1.5s infinite; }
         @keyframes pulseText { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
-        
+
         /* Danger Mode Animations */
         .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
@@ -32,6 +32,58 @@
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
+
+        /* ---- Skeuomorphic playing-card start screen (matches index.html's deck cards) ---- */
+        :root {
+            --ink: #1f2937;
+            --accent-card: #2563eb;
+            --shadow-color: rgba(30, 41, 59, 0.25);
+            --shadow-color-soft: rgba(30, 41, 59, 0.12);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --ink: #f1f5f9;
+                --accent-card: #60a5fa;
+                --shadow-color: rgba(0, 0, 0, 0.55);
+                --shadow-color-soft: rgba(0, 0, 0, 0.35);
+            }
+        }
+        .start-deck-wrap { position: relative; padding: 0 20px 20px 0; }
+        .start-stack-layer {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            border: 3px solid var(--ink);
+            background: var(--start-stack-bg, #fff);
+            box-shadow: 3px 3px 0 var(--shadow-color-soft);
+        }
+        @media (prefers-color-scheme: dark) { .start-stack-layer { --start-stack-bg: #1e293b; } }
+        .start-stack-layer.l2 { transform: translate(12px, 12px) rotate(2.5deg); z-index: 1; opacity: 0.75; }
+        .start-stack-layer.l1 { transform: translate(6px, 6px) rotate(-1.5deg); z-index: 2; opacity: 0.9; }
+        .start-card-face {
+            position: relative;
+            z-index: 3;
+            border: 3px solid var(--ink);
+            border-radius: 24px;
+            box-shadow: 9px 9px 0 var(--shadow-color);
+        }
+        .start-card-face::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1.5px solid var(--ink);
+            border-radius: 17px;
+            opacity: 0.18;
+            pointer-events: none;
+        }
+        .start-card-corner {
+            position: absolute;
+            font-size: 22px;
+            line-height: 1;
+            z-index: 4;
+        }
+        .start-card-corner.tl { top: 16px; left: 18px; }
+        .start-card-corner.br { bottom: 16px; right: 18px; transform: rotate(180deg); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col text-gray-800 dark:text-gray-100 relative bg-blue-50 dark:bg-gray-900">
@@ -44,65 +96,75 @@
         <!-- ========================================== -->
         <!--                 START SCREEN               -->
         <!-- ========================================== -->
-        <div id="view-start" class="m-auto w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl text-center slide-up max-h-[90vh] overflow-y-auto">
-            <div class="text-left mb-2">
-                <a href="index.html" class="text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 uppercase tracking-wide transition">🏠 Home</a>
-            </div>
-            <h1 id="start-title" class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-2">It's Time for a Quiz 🔥</h1>
-            <p class="text-gray-500 dark:text-gray-400 mb-6 font-bold">Speed Run Challenge</p>
+        <div id="view-start" class="m-auto w-full max-w-md slide-up">
+          <div class="start-deck-wrap">
+            <div class="start-stack-layer l2"></div>
+            <div class="start-stack-layer l1"></div>
+            <div class="start-card-face bg-white dark:bg-gray-800">
+                <div id="start-corner-tl" class="start-card-corner tl">🔥</div>
+                <div id="start-corner-br" class="start-card-corner br">🔥</div>
+                <div class="text-center p-8 max-h-[90vh] overflow-y-auto">
+                    <div class="text-left mb-2">
+                        <a href="index.html" class="text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 uppercase tracking-wide transition">🏠 Home</a>
+                    </div>
+                    <h1 id="start-title" class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-2">It's Time for a Quiz 🔥</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mb-6 font-bold">Speed Run Challenge</p>
 
-            <div id="loading-indicator" class="text-xl font-bold text-gray-400 dark:text-gray-500 mb-4 pulse-text">
-                Fetching questions...
-            </div>
+                    <div id="loading-indicator" class="text-xl font-bold text-gray-400 dark:text-gray-500 mb-4 pulse-text">
+                        Fetching questions...
+                    </div>
 
-            <!-- 2. Title -->
-            <div id="title-input-container" class="mb-4 text-left hidden">
-                <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Quiz Title</label>
-                <input type="text" id="quiz-title-input" placeholder="e.g. Physics Midterm" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition">
-            </div>
+                    <!-- 2. Title -->
+                    <div id="title-input-container" class="mb-4 text-left hidden">
+                        <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Quiz Title</label>
+                        <input type="text" id="quiz-title-input" placeholder="e.g. Physics Midterm" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition">
+                    </div>
 
-            <!-- 1. URL -->
-            <div id="url-input-container" class="mb-4 text-left hidden">
-                <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide flex justify-between items-center">
-                    <span>Google Sheet URL</span>
-                    <button onclick="showHelp()" class="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-black flex items-center gap-1 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                        </svg>
-                        Help
+                    <!-- 1. URL -->
+                    <div id="url-input-container" class="mb-4 text-left hidden">
+                        <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide flex justify-between items-center">
+                            <span>Google Sheet URL</span>
+                            <button onclick="showHelp()" class="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-black flex items-center gap-1 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                </svg>
+                                Help
+                            </button>
+                        </label>
+                        <input type="text" id="sheet-url-input" placeholder="Paste link (leave blank for default)" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition">
+                    </div>
+
+                    <!-- 3. Time Limit -->
+                    <div id="time-select-container" class="mb-4 text-left hidden">
+                        <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Time Limit</label>
+                        <select id="time-limit" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition cursor-pointer appearance-none">
+                            <option value="1">1 Minute</option>
+                            <option value="2">2 Minutes</option>
+                            <option value="5">5 Minutes</option>
+                            <option value="10" selected>10 Minutes</option>
+                            <option value="15">15 Minutes</option>
+                        </select>
+                    </div>
+
+                    <!-- 5. Danger Mode -->
+                    <div id="danger-settings-container" class="mb-6 text-left hidden bg-red-50 dark:bg-red-950 p-4 rounded-xl border-2 border-red-100 dark:border-red-900">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="danger-mode-toggle" class="form-checkbox h-6 w-6 text-red-600 rounded">
+                            <span class="text-sm font-black text-red-600 dark:text-red-400 uppercase tracking-wide flex items-center gap-1">
+                                ⚠️ Danger Mode
+                            </span>
+                        </label>
+                    </div>
+
+                    <button id="btn-start" onclick="handleActionClick()" disabled class="w-full bg-gray-400 text-white font-black py-4 rounded-xl transition shadow-lg text-2xl uppercase tracking-wide cursor-not-allowed hidden mt-2">
+                        Start
                     </button>
-                </label>
-                <input type="text" id="sheet-url-input" placeholder="Paste link (leave blank for default)" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition">
+                    <button id="btn-copy-link" onclick="copyQuizLink()" class="w-full mt-3 bg-transparent text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold py-2 text-sm uppercase tracking-wide transition hidden">
+                        🔗 Copy Link to This Quiz
+                    </button>
+                </div>
             </div>
-
-            <!-- 3. Time Limit -->
-            <div id="time-select-container" class="mb-4 text-left hidden">
-                <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Time Limit</label>
-                <select id="time-limit" class="w-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-100 font-bold py-3 px-4 rounded-xl focus:outline-none focus:border-blue-500 transition cursor-pointer appearance-none">
-                    <option value="1">1 Minute</option>
-                    <option value="2">2 Minutes</option>
-                    <option value="5">5 Minutes</option>
-                    <option value="10" selected>10 Minutes</option>
-                    <option value="15">15 Minutes</option>
-                </select>
-            </div>
-
-            <!-- 5. Danger Mode -->
-            <div id="danger-settings-container" class="mb-6 text-left hidden bg-red-50 dark:bg-red-950 p-4 rounded-xl border-2 border-red-100 dark:border-red-900">
-                <label class="flex items-center space-x-3 cursor-pointer">
-                    <input type="checkbox" id="danger-mode-toggle" class="form-checkbox h-6 w-6 text-red-600 rounded">
-                    <span class="text-sm font-black text-red-600 dark:text-red-400 uppercase tracking-wide flex items-center gap-1">
-                        ⚠️ Danger Mode
-                    </span>
-                </label>
-            </div>
-
-            <button id="btn-start" onclick="handleActionClick()" disabled class="w-full bg-gray-400 text-white font-black py-4 rounded-xl transition shadow-lg text-2xl uppercase tracking-wide cursor-not-allowed hidden mt-2">
-                Start
-            </button>
-            <button id="btn-copy-link" onclick="copyQuizLink()" class="w-full mt-3 bg-transparent text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold py-2 text-sm uppercase tracking-wide transition hidden">
-                🔗 Copy Link to This Quiz
-            </button>
+          </div>
         </div>
 
         <!-- Help Modal -->
@@ -226,6 +288,10 @@
         if (displayTitle) {
             document.title = displayTitle;
             document.getElementById('start-title').innerText = displayTitle;
+        }
+        if (customIcon) {
+            document.getElementById('start-corner-tl').innerText = customIcon;
+            document.getElementById('start-corner-br').innerText = customIcon;
         }
 
         const isDangerMode = urlParams.get('danger') === 'true';
