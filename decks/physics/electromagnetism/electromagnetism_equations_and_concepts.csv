@@ -1,0 +1,30 @@
+Question,Answers,Explanation,Level
+What equation gives the current in terms of charge and time?,I=q/t|I = q/t,Current is the rate of flow of charge.,1
+What equation is Ohm's law?,V=IR|V = IR,,1
+What equation gives electrical power?,P=IV|P = IV,,1
+What equation gives the total resistance of resistors in series?,RT=R1+R2|R_T=R1+R2|RT = R1 + R2 + ...|add them up,For resistors in series you simply add up each resistance.,1
+What equation gives the total resistance of resistors in parallel?,1/RT=1/R1+1/R2|add the reciprocals|1/R_T = 1/R1 + 1/R2 + ...,For resistors in parallel you add the reciprocals of each resistance.,2
+What equation gives electric field strength in terms of force and charge?,E=F/q|E = F/q,,1
+What equation gives electric field strength in terms of voltage and distance (for a uniform field)?,E=V/d|E = V/d,This version of E only works for a uniform field between two plates.,1
+What equation gives the change in electric potential energy of a charge moving through a field?,dEp=qEd|delta Ep = qEd|ΔEp=qEd|change in Ep = qEd,,2
+What equation gives the force on a current-carrying conductor in a magnetic field?,F=BIL|F = BIL,,1
+What equation gives the force on a single moving charge in a magnetic field?,F=Bqv|F = Bqv,,1
+What equation gives the induced EMF for a conductor moving through a magnetic field (motional EMF)?,V=BvL|V = BvL,,2
+Which quantity in F=mg plays the same role as charge q plays in F=qE?,mass|m|mass (m),"Electricity equations mirror gravity equations: mass in gravity corresponds to charge in electricity.",2
+Which quantity in dEp=mgh plays the same role as distance through the field d plays in dEp=qEd?,height|h|height (h),,2
+Which quantity in electricity plays the same role as gravitational field strength g plays in gravity?,electric field strength|E|electric field strength (E),,2
+Which quantity plays the same role as gravitational potential gh plays in gravity?,voltage|V|voltage (V)|potential,,2
+True or false: the electricity equations F=qE and dEp=qEd have a direct gravity equivalent.,true,"F=qE mirrors F=mg and dEp=qEd mirrors dEp=mgh.",2
+True or false: the circuit equations (V=IR, P=IV, resistors in series/parallel) have a direct gravity equivalent.,false,"These are circuit ""plumbing"" equations with no equivalent in the gravity analogy — it's where the analogy runs out.",2
+In F=BIL what does the symbol L represent?,length of the conductor in the field|length,,2
+In F=Bqv what does the symbol v represent?,velocity|speed|velocity of the charge,,2
+Which equation would you use to find the force on a wire carrying current through a magnetic field?,F=BIL|F = BIL,,1
+Which equation would you use to find the force on a single moving electron in a magnetic field?,F=Bqv|F = Bqv,,1
+Which equation would you use to find the EMF induced by a rod moving through a magnetic field?,V=BvL|V = BvL,,2
+If you double the current I in a conductor, what happens to the force F=BIL on it (with B and L constant)?,it doubles|doubles,,2
+If you double the resistance in a circuit and keep voltage constant, what happens to the current (V=IR)?,it halves|halves,"Rearranging V=IR gives I=V/R, so doubling R halves I for constant V.",3
+Two 10 ohm resistors are connected in series. What is the total resistance?,20 ohm|20|20 ohms|20Ω,RT=R1+R2=10+10=20 ohm.,2
+Two 10 ohm resistors are connected in parallel. What is the total resistance?,5 ohm|5|5 ohms|5Ω,1/RT=1/10+1/10=2/10 so RT=5 ohm.,3
+What equation gives kinetic energy?,Ek=1/2 m v^2|Ek = 0.5 m v^2|E_k=1/2mv^2,"This is a mechanics equation reused in the electricity/energy picture (e.g. after a charge is accelerated through a field).",1
+What equation gives power in terms of energy and time?,P=dE/t|P = delta E / t|P=ΔE/t,,1
+True or false: F=BIL only applies to a conductor carrying current in a magnetic field, not to a single moving charge.,true,For a single moving charge you instead use F=Bqv.,2

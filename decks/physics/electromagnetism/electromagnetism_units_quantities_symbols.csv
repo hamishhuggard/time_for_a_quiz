@@ -10,19 +10,19 @@ What is the unit for voltage?,volt (V)|volt|V,,1
 What is the symbol for charge?,q|Q|q (or Q),,1
 What is the unit for charge?,coulomb (C)|coulomb|C,,1
 What is the symbol for current?,I,,1
-What is the unit for current?,ampere (A)|ampere|amp|A,,1
+What is the unit for current?,ampere (A)|ampere|amperes|amp|amps|A,,1
 What is the symbol for resistance?,R,,1
 What is the unit for resistance?,ohm|ohm (Ω)|Ω,,1
 What is the symbol for magnetic field strength?,B,,1
 What is the unit for magnetic field strength?,tesla (T)|tesla|T,,1
 What is the symbol for electric field strength?,E,,2
-What is the unit for electric field strength?,N/C|volt per metre (V/m)|V/m|volt per metre,,2
+What is the unit for electric field strength?,N/C|volt per metre (V/m)|V/m|volt per metre|volt per meter|N per C,,2
 "What is the symbol for the unit ""ohm""?",omega|Ω,We don't write a plain O for ohms since it looks too much like zero — the Greek letter omega stands in instead.,2
 The volt is named after which scientist?,Alessandro Volta|Volta,Alessandro Volta invented the first electrical battery.,2
-The ampere is named after which scientist?,Andre-Marie Ampere|Ampere|André-Marie Ampère|Ampère,André-Marie Ampère founded the study of electrodynamics.,2
+The ampere is named after which scientist?,Andre-Marie Ampere|Andre Marie Ampere|Ampere|André-Marie Ampère|Ampère,André-Marie Ampère founded the study of electrodynamics.,2
 Which quantity is measured in ohms?,resistance,,1
 The symbol I for current comes from which word?,intensite|intensité|the French word intensité,I comes from the French word intensité meaning current intensity.,2
-Which two quantities share the exact same symbol E?,energy and electric field strength,"Same letter, two completely different quantities and units — stay alert for this one.",3
+Which two quantities share the exact same symbol E?,energy and electric field strength|electric field strength and energy,"Same letter, two completely different quantities and units — stay alert for this one.",3
 Which symbol represents a bulk/macroscopic charge made of billions of particles?,Q,Uppercase Q is the charge on an object — made of billions of individual particle charges.,2
 Which symbol represents the charge on a single particle like one electron?,q,Lowercase q is the charge on one fundamental particle such as a single electron or proton.,2
 True or false: the coulomb (C) is the SI unit of electric current.,false,The coulomb measures charge — current is measured in amperes (A).,2
