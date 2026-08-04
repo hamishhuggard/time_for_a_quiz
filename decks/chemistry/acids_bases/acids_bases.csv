@@ -23,7 +23,7 @@ What generally happens to the pH of an acidic solution as a base is added to neu
 True or false: neutralising an acid always produces table salt.,false,"""Salt"" in chemistry means any ionic compound formed from an acid - table salt (sodium chloride) is just one example.",2
 True or false: after neutralisation the pH always becomes exactly 7.,false,It depends on the amounts used - the solution just moves towards 7, it won't necessarily land exactly on it.,2
 Which salt is formed when hydrochloric acid reacts with a base?,a chloride,Hydrochloric acid produces chloride salts.,2
-Which salt is formed when sulfuric acid reacts with a base?,a sulfate,Sulfuric acid produces sulfate salts.,2
+Which salt is formed when sulfuric acid reacts with a base?,a sulfate|sulfate,Sulfuric acid produces sulfate salts.,2
 Which salt is formed when nitric acid reacts with a base?,a nitrate,Nitric acid produces nitrate salts.,2
 What salt is formed when hydrochloric acid reacts with magnesium?,magnesium chloride,,2
 What salt is formed when sulfuric acid reacts with copper (or copper oxide)?,copper sulfate,,2
