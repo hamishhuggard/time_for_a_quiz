@@ -1,0 +1,29 @@
+Question,Answers,Explanation,Level
+hydrogen + oxygen -> water,2H2 + O2 -> 2H2O,,2
+magnesium + oxygen -> magnesium oxide,2Mg + O2 -> 2MgO,,2
+carbon + oxygen -> carbon dioxide,C + O2 -> CO2,,1
+sodium + chlorine -> sodium chloride,2Na + Cl2 -> 2NaCl,,2
+iron + sulfur -> iron sulfide,Fe + S -> FeS,,1
+hydrogen + chlorine -> hydrogen chloride,H2 + Cl2 -> 2HCl,,2
+zinc + oxygen -> zinc oxide,2Zn + O2 -> 2ZnO,,2
+hydrochloric acid + sodium hydroxide -> sodium chloride + water,HCl + NaOH -> NaCl + H2O,,2
+nitric acid + sodium hydroxide -> sodium nitrate + water,HNO3 + NaOH -> NaNO3 + H2O,,2
+sulfuric acid + potassium hydroxide -> potassium sulfate + water,H2SO4 + 2KOH -> K2SO4 + 2H2O,,3
+hydrochloric acid + calcium hydroxide -> calcium chloride + water,2HCl + Ca(OH)2 -> CaCl2 + 2H2O,,3
+sulfuric acid + calcium hydroxide -> calcium sulfate + water,H2SO4 + Ca(OH)2 -> CaSO4 + 2H2O,,3
+magnesium + hydrochloric acid -> magnesium chloride + hydrogen,Mg + 2HCl -> MgCl2 + H2,,2
+zinc + hydrochloric acid -> zinc chloride + hydrogen,Zn + 2HCl -> ZnCl2 + H2,,2
+zinc + sulfuric acid -> zinc sulfate + hydrogen,Zn + H2SO4 -> ZnSO4 + H2,,2
+magnesium + sulfuric acid -> magnesium sulfate + hydrogen,Mg + H2SO4 -> MgSO4 + H2,,2
+calcium + hydrochloric acid -> calcium chloride + hydrogen,Ca + 2HCl -> CaCl2 + H2,,2
+sodium + hydrochloric acid -> sodium chloride + hydrogen,2Na + 2HCl -> 2NaCl + H2,,3
+calcium carbonate + hydrochloric acid -> calcium chloride + water + carbon dioxide,CaCO3 + 2HCl -> CaCl2 + H2O + CO2,,3
+sodium carbonate + hydrochloric acid -> sodium chloride + water + carbon dioxide,Na2CO3 + 2HCl -> 2NaCl + H2O + CO2,,3
+magnesium carbonate + sulfuric acid -> magnesium sulfate + water + carbon dioxide,MgCO3 + H2SO4 -> MgSO4 + H2O + CO2,,2
+copper carbonate + sulfuric acid -> copper sulfate + water + carbon dioxide,CuCO3 + H2SO4 -> CuSO4 + H2O + CO2,,2
+calcium carbonate + nitric acid -> calcium nitrate + water + carbon dioxide,CaCO3 + 2HNO3 -> Ca(NO3)2 + H2O + CO2,,3
+sodium hydrogen carbonate + hydrochloric acid -> sodium chloride + water + carbon dioxide,NaHCO3 + HCl -> NaCl + H2O + CO2,,3
+potassium + water -> potassium hydroxide + hydrogen,2K + 2H2O -> 2KOH + H2,,3
+aluminium + oxygen -> aluminium oxide,4Al + 3O2 -> 2Al2O3,,3
+nitrogen + hydrogen -> ammonia,N2 + 3H2 -> 2NH3,,3
+methane + oxygen -> carbon dioxide + water,CH4 + 2O2 -> CO2 + 2H2O,,3

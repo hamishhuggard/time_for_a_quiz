@@ -284,6 +284,27 @@
                 </div>
             </a>
 
+            <!--
+              Same default-length assumption as above (~18s/question, target ~5 min
+              average). word_to_symbol_equations.csv has 28 items -> 28*18s ≈ 8.4min,
+              kept at time=5/dangerTime=8 consistent with the other decks that also
+              exceed a literal 5-minute average rather than scaling further.
+            -->
+            <a class="deck-link" data-csv="decks/chemistry/word_to_symbol_equations/word_to_symbol_equations.csv" href="quiz.html?csv=decks%2Fchemistry%2Fword_to_symbol_equations%2Fword_to_symbol_equations.csv&title=Word%20%E2%86%92%20Symbol%20Equations&dangerTime=8&time=5&icon=%E2%9A%96%EF%B8%8F">
+                <div class="deck-stack">
+                    <div class="stack-layer l2"></div>
+                    <div class="stack-layer l1"></div>
+                    <div class="card-face">
+                        <div class="card-corner tl">⚖️</div>
+                        <div class="card-corner br">⚖️</div>
+                        <div class="card-pip">⚖️</div>
+                        <div class="card-title">Word &rarr; Symbol Equations</div>
+                        <div class="card-hook">Convert word equations into balanced chemical formula equations.</div>
+                        <div class="card-count"></div>
+                    </div>
+                </div>
+            </a>
+
         </div>
     </div>
     <!-- Physics -->
