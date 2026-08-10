@@ -226,6 +226,11 @@
                     <span class="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full font-black text-base shadow-sm"><span id="player-coins">0</span> ⭐</span>
                 </div>
 
+                <div class="flex flex-col items-center">
+                    <span class="font-black text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wider">Accuracy</span>
+                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full font-black text-base shadow-sm"><span id="accuracy-live">--</span></span>
+                </div>
+
                 <div class="flex flex-col items-end">
                     <span class="font-black text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wider">Total Time</span>
                     <span class="text-gray-800 dark:text-gray-100 font-black text-xl timer-display" id="timer-text">10:00</span>
@@ -270,8 +275,16 @@
             <p id="end-subtitle" class="text-gray-500 dark:text-gray-400 font-bold mb-6 text-lg">Here is how you did.</p>
 
             <div id="score-container" class="bg-yellow-100 dark:bg-yellow-900 border-2 border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200 p-6 rounded-2xl inline-block w-full shadow-sm mb-8">
-                <span class="block text-sm uppercase tracking-widest font-black mb-1">Final Score</span>
-                <span class="font-black text-5xl"><span id="final-coins">0</span> ⭐</span>
+                <div class="flex items-center justify-around gap-4">
+                    <div>
+                        <span class="block text-sm uppercase tracking-widest font-black mb-1">Final Score</span>
+                        <span class="font-black text-5xl"><span id="final-coins">0</span> ⭐</span>
+                    </div>
+                    <div class="border-l-2 border-yellow-300 dark:border-yellow-700 pl-4">
+                        <span class="block text-sm uppercase tracking-widest font-black mb-1">Accuracy</span>
+                        <span class="font-black text-5xl"><span id="final-accuracy">--</span></span>
+                    </div>
+                </div>
             </div>
 
             <div id="end-game-message" class="text-left text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 p-6 rounded-xl border border-gray-200 dark:border-gray-600 shadow-inner">
@@ -930,8 +943,20 @@
         function giveUp() { processResult("", true); }
         function nextQuestion() { loadNextQuestion(); }
         
+        function computeAccuracy() {
+            let totalAtt = 0, totalCorrect = 0;
+            for (let d of Object.values(myHistory)) {
+                totalAtt += d.attempts;
+                totalCorrect += d.correct;
+            }
+            if (totalAtt === 0) return null;
+            return Math.round((totalCorrect / totalAtt) * 100);
+        }
+
         function updateUI() {
             document.getElementById('player-coins').innerText = myScore;
+            const acc = computeAccuracy();
+            document.getElementById('accuracy-live').innerText = (acc === null) ? '--' : acc + '%';
         }
 
         // --- END GAME & ANALYSIS ---
@@ -952,6 +977,8 @@
             document.getElementById('view-end').style.display = 'block';
 
             document.getElementById('final-coins').innerText = myScore;
+            const finalAcc = computeAccuracy();
+            document.getElementById('final-accuracy').innerText = (finalAcc === null) ? '--' : finalAcc + '%';
             saveBestScore();
 
             playVictoryFanfare();
