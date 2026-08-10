@@ -93,6 +93,11 @@
     <!-- Danger Vignette Overlay -->
     <div id="danger-vignette" class="fixed inset-0 pointer-events-none z-[100] hidden transition-all duration-75" style="box-shadow: inset 0 0 0px rgba(255,0,0,0);"></div>
 
+    <!-- Accuracy Tint Overlay: a subtle, low-saturation red-to-green wash behind the
+         card, reflecting the running % accuracy. Deliberately faint (low alpha) so it
+         reads as ambient mood rather than a loud pass/fail signal. -->
+    <div id="accuracy-vignette" class="fixed inset-0 pointer-events-none z-0 transition-colors duration-700 ease-out" style="background-color: transparent;"></div>
+
     <div class="flex-1 flex p-4 relative z-10">
 
         <!-- ========================================== -->
@@ -1005,10 +1010,28 @@
             return Math.round((totalCorrect / totalAtt) * 100);
         }
 
+        function applyAccuracyTint(acc) {
+            const vignette = document.getElementById('accuracy-vignette');
+            if (acc === null) {
+                vignette.style.backgroundColor = 'transparent';
+                return;
+            }
+            // Low-saturation red -> green wash, kept faint (constant low alpha) so it
+            // reads as ambient mood rather than a loud pass/fail signal.
+            const t = Math.max(0, Math.min(100, acc)) / 100;
+            const from = { r: 214, g: 138, b: 138 }; // muted red, 0% accuracy
+            const to   = { r: 122, g: 184, b: 150 }; // muted green, 100% accuracy
+            const r = Math.round(from.r + (to.r - from.r) * t);
+            const g = Math.round(from.g + (to.g - from.g) * t);
+            const b = Math.round(from.b + (to.b - from.b) * t);
+            vignette.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.08)`;
+        }
+
         function updateUI() {
             document.getElementById('player-coins').innerText = myScore;
             const acc = computeAccuracy();
             document.getElementById('accuracy-live').innerText = (acc === null) ? '--' : acc + '%';
+            applyAccuracyTint(acc);
         }
 
         // --- END GAME & ANALYSIS ---
@@ -1031,6 +1054,7 @@
             document.getElementById('final-coins').innerText = myScore;
             const finalAcc = computeAccuracy();
             document.getElementById('final-accuracy').innerText = (finalAcc === null) ? '--' : finalAcc + '%';
+            applyAccuracyTint(finalAcc);
             saveBestScore();
 
             playVictoryFanfare();
