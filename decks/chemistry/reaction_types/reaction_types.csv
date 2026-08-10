@@ -1,60 +1,27 @@
 Question,Answers,Explanation,Level
-Complete the word equation: acid + base -> salt + ___,water,,1
-Complete the word equation: acid + ___ -> salt + water,base,,1
-Complete the word equation: acid + metal -> salt + ___,hydrogen,,1
-Complete the word equation: acid + ___ -> salt + hydrogen,metal,,1
-Complete the word equation: ___ + acid -> salt + hydrogen,metal,,1
-Complete the word equation: metal carbonate + acid -> salt + water + ___,carbon dioxide,,1
-Complete the word equation: metal carbonate + acid -> salt + ___ + carbon dioxide,water,,1
-Complete the word equation: ___ + acid -> salt + water + carbon dioxide,metal carbonate,,1
-Complete the word equation: metal carbonate + ___ -> salt + water + carbon dioxide,acid,,1
-Complete the word equation: acid + metal carbonate -> ___ + water + carbon dioxide,salt,,1
-Complete the word equation: acid + base -> ___ + water,salt,,1
-Complete the word equation: acid + metal -> ___ + hydrogen,salt,,1
-"In the pattern acid + base -> salt + water, what type of reaction is this called?",neutralisation,,1
-Fill in the blank: acid + metal carbonate -> salt + water + ___ (a gas that turns limewater cloudy),carbon dioxide,,1
-Fill in the blank: acid + metal -> salt + ___ (a gas that gives a squeaky pop with a lit splint),hydrogen,,1
-"Complete: Magnesium + sulfuric acid -> magnesium sulfate + ___",hydrogen,,2
-"Complete: Zinc + hydrochloric acid -> zinc chloride + ___",hydrogen,,2
-"Complete: Calcium carbonate + hydrochloric acid -> calcium chloride + water + ___",carbon dioxide,,2
-"Complete: ___ carbonate + hydrochloric acid -> calcium chloride + water + carbon dioxide",calcium,,2
-"Complete: Sodium hydrogen carbonate + hydrochloric acid -> sodium chloride + water + ___",carbon dioxide,,2
-"Complete: Hydrochloric acid + sodium hydroxide -> sodium chloride + ___",water,,2
-"Complete: Sulfuric acid + potassium hydroxide -> potassium sulfate + ___",water,,2
-"Complete: Nitric acid + copper oxide -> copper nitrate + ___",water,,2
-"Complete: Magnesium + hydrochloric acid -> ___ + hydrogen",magnesium chloride,,2
-"Complete: Zinc + sulfuric acid -> ___ + hydrogen",zinc sulfate,,2
-"Complete: Calcium carbonate + nitric acid -> ___ + water + carbon dioxide",calcium nitrate,,2
-"Complete: Sodium carbonate + hydrochloric acid -> ___ + water + carbon dioxide",sodium chloride,,2
-"Complete: Antacid tablets (a base) react with excess stomach acid in the pattern acid + base -> salt + ___",water,,2
-Which gas is produced when a metal reacts with an acid?,hydrogen,,1
-Which gas is produced when a metal carbonate reacts with an acid?,carbon dioxide,,1
-"Which reaction pattern produces water as well as a gas: metal + acid, or metal carbonate + acid?",metal carbonate + acid,,2
-"Which reaction pattern produces only two products: acid + base, acid + metal, or acid + metal carbonate?",acid + metal|acid + base,"Acid + base and acid + metal both give two products (salt + water, or salt + hydrogen); only acid + carbonate gives three.",3
-Which reaction pattern produces three products?,acid + metal carbonate|acid + carbonate,Acid + metal carbonate gives salt + water + carbon dioxide - three products.,2
-True or false: acid + metal produces water as one of its products.,false,Acid + metal only produces salt and hydrogen - no water.,2
-True or false: acid + metal carbonate produces water as one of its products.,true,Acid + metal carbonate produces salt + water + carbon dioxide.,1
-True or false: acid + base produces a gas.,false,Acid + base (neutralisation) produces salt and water only - no gas.,2
-True or false: both the metal and metal-carbonate reactions with acid produce a gas.,true,"Metal + acid gives hydrogen, metal carbonate + acid gives carbon dioxide.",2
-True or false: the gas from metal + acid and the gas from metal carbonate + acid are the same gas.,false,Metal + acid gives hydrogen; metal carbonate + acid gives carbon dioxide - different gases with different tests.,2
-"True or false: all three reaction patterns (acid+base, acid+metal, acid+carbonate) produce a salt.",true,A salt is the one product common to all three patterns.,1
-True or false: only acid + metal carbonate reactions produce bubbles.,false,Acid + metal also produces bubbles (hydrogen gas) - you need a gas test to tell which reaction is happening.,2
-What test distinguishes whether the gas from an acid reaction is hydrogen or carbon dioxide?,use a lit/burning splint for hydrogen (squeaky pop) or bubble the gas through limewater for carbon dioxide (turns cloudy)|gas test,,2
-"If a lit splint gives a squeaky pop, which reaction pattern is happening: metal + acid or metal carbonate + acid?",metal + acid,,2
-"If bubbling a gas through limewater turns it cloudy, which reaction pattern is happening: metal + acid or metal carbonate + acid?",metal carbonate + acid,,2
-Name the three general reaction patterns that all involve an acid as a reactant.,acid + base|acid + metal|acid + metal carbonate,,2
-Which of the three acid reaction patterns is also called neutralisation?,acid + base,,1
-"Complete: copper does not react with dilute acid because it is ___ than hydrogen in reactivity",less reactive,"Copper, silver, gold and platinum are unreactive with dilute acid because they are less reactive than hydrogen.",3
-Name a metal that does NOT react with dilute acid.,copper|silver|gold|platinum,,2
-"Complete: In the reaction acid + metal -> salt + hydrogen, if the metal is unreactive (like copper), what do you observe?",no reaction|nothing happens|no bubbles,,2
-"Complete: Zinc + hydrochloric acid -> ___ chloride + hydrogen",zinc,,2
-"Complete: Magnesium carbonate + sulfuric acid -> magnesium sulfate + water + ___",carbon dioxide,,2
-"Complete: Magnesium carbonate + ___ acid -> magnesium sulfate + water + carbon dioxide",sulfuric,,3
-"Complete: ___ + hydrochloric acid -> magnesium chloride + hydrogen",magnesium,,2
-"Complete: ___ + hydrochloric acid -> calcium chloride + water + carbon dioxide",calcium carbonate,,2
-"Complete: sodium hydroxide + hydrochloric acid -> ___ + water",sodium chloride,,2
-Which product is unique to acid + metal (not shared by the other two patterns)?,hydrogen,,2
-Which product is unique to acid + metal carbonate (not shared by the other two patterns)?,carbon dioxide,,2
-Which product is common to all three reaction patterns?,salt,,1
-Why does acid rain damage limestone buildings and statues?,"limestone is calcium carbonate, which reacts with the acid (acid + metal carbonate pattern) producing carbon dioxide and dissolving the stone|it reacts as acid + metal carbonate",,3
-"Complete: Sodium carbonate + nitric acid -> sodium nitrate + water + ___",carbon dioxide,,2
+acid + base -> salt + ___,water|H2O,,1
+acid + ___ -> salt + water,base,,1
+___ + base -> salt + water,acid,,1
+acid + base -> ___ + water,salt,,1
+acid + metal -> salt + ___,hydrogen|hydrogen gas|H2,,1
+acid + ___ -> salt + hydrogen,metal,,1
+___ + acid -> salt + hydrogen,metal,,1
+acid + metal -> ___ + hydrogen,salt,,1
+metal + acid -> salt + ___,hydrogen|hydrogen gas|H2,,1
+metal + ___ -> salt + hydrogen,acid,,1
+___ + acid -> salt + hydrogen gas,metal,,1
+metal carbonate + acid -> salt + water + ___,carbon dioxide|CO2,,1
+metal carbonate + acid -> salt + ___ + carbon dioxide,water|H2O,,1
+___ + acid -> salt + water + carbon dioxide,metal carbonate,,1
+metal carbonate + ___ -> salt + water + carbon dioxide,acid,,1
+acid + metal carbonate -> ___ + water + carbon dioxide,salt,,1
+acid + metal carbonate -> salt + water + ___,carbon dioxide|CO2,,1
+acid + ___ -> salt + water + carbon dioxide,metal carbonate,,1
+___ carbonate + acid -> salt + water + carbon dioxide,metal,,1
+base + acid -> salt + ___,water|H2O,,1
+metal + acid -> ___ + hydrogen,salt,,1
+metal carbonate + acid -> ___ + water + carbon dioxide,salt,,1
+hydrogen gas test: lit splint -> ___,squeaky pop,,1
+carbon dioxide gas test: bubble through limewater -> ___,milky/cloudy|milky|cloudy,,1
+squeaky pop with a lit splint = positive test for ___,hydrogen|hydrogen gas|H2,,1
+limewater turning milky/cloudy = positive test for ___,carbon dioxide|CO2,,1
