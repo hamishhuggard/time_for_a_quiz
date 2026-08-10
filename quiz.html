@@ -187,10 +187,12 @@
                         <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">Question</code>,
                         <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">Answers</code>,
                         <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">Explanation</code> (optional),
-                        <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">Level</code> (optional), and
-                        <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">ImageURL</code> (optional).
+                        <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">Level</code> (optional),
+                        <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">ImageURL</code> (optional), and
+                        <code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded border border-gray-200 dark:border-gray-600">Options</code> (optional).
                     </li>
                     <li>For <b>Answers</b>, separate multiple acceptable variations with a pipe (<code class="bg-gray-100 dark:bg-gray-700 text-pink-500 dark:text-pink-400 px-1 py-0.5 rounded">|</code>). <i>e.g. apple|apples</i></li>
+                    <li>For <b>Options</b>, leave blank for a normal typed-answer question. Fill it in (pipe-separated wrong answers, e.g. <i>a bright flash|it goes out</i>) to turn the row into multichoice — the correct <b>Answers</b> entry is added in as a choice automatically.</li>
                     <li>Click <b>Share</b> in the top right. Change to <b>Anyone with the link</b>. Copy and paste it here!</li>
                 </ol>
                 <div class="bg-blue-50 dark:bg-blue-950 p-3 rounded-lg text-xs text-blue-800 dark:text-blue-200 font-bold mb-4">
@@ -259,6 +261,8 @@
             <!-- Input & Actions -->
             <div class="shrink-0 w-full">
                 <input type="text" id="answer-input" placeholder="Type answer & press Enter" oninput="toggleSubmitButton()" onkeypress="handleEnter(event)" autocomplete="off" class="w-full px-4 py-4 text-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-xl focus:border-blue-500 focus:outline-none mb-4 text-center font-bold shadow-inner">
+
+                <div id="mc-options" class="hidden w-full flex flex-col gap-3 mb-4"></div>
 
                 <button id="submit-btn" onclick="submitAnswer()" class="w-full bg-green-500 text-white font-black py-4 rounded-xl hidden hover:bg-green-600 active:scale-95 transition shadow-lg text-xl uppercase tracking-wide">Submit Answer</button>
                 <button id="give-up-btn" onclick="giveUp()" class="w-full bg-gray-400 dark:bg-gray-600 text-white font-black py-4 rounded-xl hover:bg-gray-500 dark:hover:bg-gray-500 active:scale-95 transition shadow-lg text-xl uppercase tracking-wide">Give Up / Skip</button>
@@ -394,6 +398,7 @@
                                 img: row.ImageURL ? row.ImageURL.trim() : "",
                                 rawA: row.Answers ? row.Answers.split('|').map(ans => ans.trim()) : [],
                                 rawExp: row.Explanation ? row.Explanation.trim() : "",
+                                rawOpts: row.Options ? row.Options.split('|').map(o => o.trim()).filter(o => o !== "") : [],
                                 level: row.Level ? parseInt(row.Level, 10) || 1 : 1
                             };
                         });
@@ -592,6 +597,7 @@
             let parsedQ = extractVars(qItem.rawQ);
             let parsedExp = extractVars(qItem.rawExp);
             let parsedA = qItem.rawA.map(a => extractVars(a));
+            let parsedOpts = (qItem.rawOpts || []).map(o => extractVars(o));
 
             function evaluateExpressions(str) {
                 if(!str) return "";
@@ -609,13 +615,32 @@
                 });
             }
 
+            let aDisplay = parsedA.map(a => evaluateExpressions(a).toString());
+
+            let options = null;
+            if (qItem.rawOpts && qItem.rawOpts.length > 0 && aDisplay.length > 0) {
+                let optsDisplay = parsedOpts.map(o => evaluateExpressions(o).toString());
+                let correctDisplay = aDisplay[0];
+                let combined = optsDisplay.slice();
+                if (!combined.some(o => o.toLowerCase() === correctDisplay.toLowerCase())) {
+                    combined.push(correctDisplay);
+                }
+                // Shuffle a fresh copy each time this question is instantiated so repeats
+                // don't always show the same button order.
+                options = combined
+                    .map(v => [Math.random(), v])
+                    .sort((x, y) => x[0] - y[0])
+                    .map(pair => pair[1]);
+            }
+
             return {
                 id: qItem.id,
                 q: evaluateExpressions(parsedQ),
                 img: qItem.img,
-                a: parsedA.map(a => evaluateExpressions(a).toString().toLowerCase()),
+                a: aDisplay.map(a => a.toLowerCase()),
                 exp: evaluateExpressions(parsedExp),
-                level: qItem.level
+                level: qItem.level,
+                options: options
             };
         }
 
@@ -712,15 +737,41 @@
             input.value = '';
             input.disabled = false;
             input.classList.remove('shake', 'border-red-500');
-            input.focus();
-            
+
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('feedback-area').innerHTML = '';
-            
-            toggleSubmitButton();
-            
+
+            const mcContainer = document.getElementById('mc-options');
+            mcContainer.innerHTML = '';
+
+            if (currentQuestionObj.options && currentQuestionObj.options.length > 0) {
+                // Multichoice mode: hide the text input, render option buttons.
+                input.classList.add('hidden');
+                mcContainer.classList.remove('hidden');
+                currentQuestionObj.options.forEach(opt => {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.innerText = opt;
+                    b.className = 'w-full bg-white dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 font-bold py-3 px-4 rounded-xl text-left hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 active:scale-95 transition shadow-sm';
+                    b.onclick = () => submitMCAnswer(opt);
+                    mcContainer.appendChild(b);
+                });
+                document.getElementById('submit-btn').style.display = 'none';
+                document.getElementById('give-up-btn').style.display = 'block';
+            } else {
+                input.classList.remove('hidden');
+                mcContainer.classList.add('hidden');
+                input.focus();
+                toggleSubmitButton();
+            }
+
             // Start Danger Timer for this specific question
             startDangerTimer();
+        }
+
+        function submitMCAnswer(optionText) {
+            document.querySelectorAll('#mc-options button').forEach(b => b.disabled = true);
+            processResult(optionText.trim().toLowerCase(), false);
         }
 
         // --- DANGER TIMER LOGIC ---
@@ -859,6 +910,7 @@
             inputEl.disabled = true;
             document.getElementById('submit-btn').style.display = 'none';
             document.getElementById('give-up-btn').style.display = 'none';
+            document.getElementById('mc-options').classList.add('hidden');
             
             const feedback = document.getElementById('feedback-area');
             const expArea = document.getElementById('explanation-area');

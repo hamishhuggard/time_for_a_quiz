@@ -1,27 +1,27 @@
-Question,Answers,Explanation,Level
-acid + base -> salt + ___,water|H2O,,1
-acid + ___ -> salt + water,base,,1
-___ + base -> salt + water,acid,,1
-acid + base -> ___ + water,salt,,1
-acid + metal -> salt + ___,hydrogen|hydrogen gas|H2,,1
-acid + ___ -> salt + hydrogen,metal,,1
-___ + acid -> salt + hydrogen,metal,,1
-acid + metal -> ___ + hydrogen,salt,,1
-metal + acid -> salt + ___,hydrogen|hydrogen gas|H2,,1
-metal + ___ -> salt + hydrogen,acid,,1
-___ + acid -> salt + hydrogen gas,metal,,1
-metal carbonate + acid -> salt + water + ___,carbon dioxide|CO2,,1
-metal carbonate + acid -> salt + ___ + carbon dioxide,water|H2O,,1
-___ + acid -> salt + water + carbon dioxide,metal carbonate,,1
-metal carbonate + ___ -> salt + water + carbon dioxide,acid,,1
-acid + metal carbonate -> ___ + water + carbon dioxide,salt,,1
-acid + metal carbonate -> salt + water + ___,carbon dioxide|CO2,,1
-acid + ___ -> salt + water + carbon dioxide,metal carbonate,,1
-___ carbonate + acid -> salt + water + carbon dioxide,metal,,1
-base + acid -> salt + ___,water|H2O,,1
-metal + acid -> ___ + hydrogen,salt,,1
-metal carbonate + acid -> ___ + water + carbon dioxide,salt,,1
-hydrogen gas test: lit splint -> ___,squeaky pop,,1
-carbon dioxide gas test: bubble through limewater -> ___,milky/cloudy|milky|cloudy,,1
-squeaky pop with a lit splint = positive test for ___,hydrogen|hydrogen gas|H2,,1
-limewater turning milky/cloudy = positive test for ___,carbon dioxide|CO2,,1
+Question,Answers,Explanation,Level,Options
+acid + base -> salt + ___,water|H2O,,1,
+acid + ___ -> salt + water,base,,1,
+___ + base -> salt + water,acid,,1,
+acid + base -> ___ + water,salt,,1,
+acid + metal -> salt + ___,hydrogen|hydrogen gas|H2,,1,
+acid + ___ -> salt + hydrogen,metal,,1,
+___ + acid -> salt + hydrogen,metal,,1,
+acid + metal -> ___ + hydrogen,salt,,1,
+metal + acid -> salt + ___,hydrogen|hydrogen gas|H2,,1,
+metal + ___ -> salt + hydrogen,acid,,1,
+___ + acid -> salt + hydrogen gas,metal,,1,
+metal carbonate + acid -> salt + water + ___,carbon dioxide|CO2,,1,
+metal carbonate + acid -> salt + ___ + carbon dioxide,water|H2O,,1,
+___ + acid -> salt + water + carbon dioxide,metal carbonate,,1,
+metal carbonate + ___ -> salt + water + carbon dioxide,acid,,1,
+acid + metal carbonate -> ___ + water + carbon dioxide,salt,,1,
+acid + metal carbonate -> salt + water + ___,carbon dioxide|CO2,,1,
+acid + ___ -> salt + water + carbon dioxide,metal carbonate,,1,
+___ carbonate + acid -> salt + water + carbon dioxide,metal,,1,
+base + acid -> salt + ___,water|H2O,,1,
+metal + acid -> ___ + hydrogen,salt,,1,
+metal carbonate + acid -> ___ + water + carbon dioxide,salt,,1,
+hydrogen gas test: lit splint -> ___,squeaky pop,,1,squeaky pop|it glows red|it pops with a colour change|it turns damp litmus paper blue
+carbon dioxide gas test: bubble through limewater -> ___,milky/cloudy|milky|cloudy,,1,milky/cloudy|it turns bright pink|it stays clear but bubbles stop|it turns blue-black
+squeaky pop with a lit splint = positive test for ___,hydrogen|hydrogen gas|H2,,1,
+limewater turning milky/cloudy = positive test for ___,carbon dioxide|CO2,,1,
